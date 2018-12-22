@@ -37,7 +37,7 @@ if [ "$POCKETMINE_FILE" == "" ]; then
 	else
 		echo "PocketMine-MP.phar not found"
 		echo "Downloads can be found at https://github.com/pmmp/PocketMine-MP/releases"
-		exit 1
+		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
 	fi
 fi
 
