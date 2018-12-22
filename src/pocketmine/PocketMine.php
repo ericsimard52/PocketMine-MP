@@ -126,6 +126,10 @@ namespace pocketmine {
 		return $messages;
 	}
 
+
+  ## Start Program here
+
+  ## Do some verification
 	if(!empty($messages = check_platform_dependencies())){
 		echo PHP_EOL;
 		$binary = version_compare(PHP_VERSION, "5.4") >= 0 ? PHP_BINARY : "unknown";
@@ -235,6 +239,7 @@ namespace pocketmine {
 
 	$exitCode = 0;
 	do{
+    # If the file does not exists we call the installer
 		if(!file_exists(\pocketmine\DATA . "server.properties") and !isset($opts["no-wizard"])){
 			$installer = new SetupWizard();
 			if(!$installer->run()){
