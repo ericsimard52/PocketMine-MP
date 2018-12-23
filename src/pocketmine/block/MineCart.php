@@ -33,7 +33,7 @@ use pocketmine\tile\Tile;
 class MineCart extends Transparent{
 
 	protected $id = self::MINECART;
-
+ 
 	protected $itemId = Item::MINECART;
 
 	/** @var int */
@@ -64,7 +64,7 @@ class MineCart extends Transparent{
 	}
 
 	public function getName() : string{
-		return "MINECART.PHP";
+		return "MineCart";
 	}
 
 	protected function recalculateBoundingBox() : ?AxisAlignedBB{
@@ -72,24 +72,8 @@ class MineCart extends Transparent{
 	}
 
 	public function place(Item $item, Block $blockReplace, Block $blockClicked, int $face, Vector3 $clickVector, Player $player = null) : bool{
-		if($face !== Facing::DOWN){
-
-			if($face === Facing::UP){
-				$this->rotation = $player !== null ? ((int) floor((($player->yaw + 180) * 16 / 360) + 0.5)) & 0x0f : 0;
 				$ret = parent::place($item, $blockReplace, $blockClicked, $face, $clickVector, $player);
-			}else{
-				$ret = $this->getLevel()->setBlock($blockReplace, BlockFactory::get(Block::WALL_SIGN, $face));
-			}
-
-			if($ret){
-				if(($tile = Tile::createFromItem(Tile::SIGN, $this->getLevel(), $this->asVector3(), $item)) !== null){
-					$this->level->addTile($tile);
-				}
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	public function onNearbyBlockChange() : void{

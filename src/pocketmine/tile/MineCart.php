@@ -21,12 +21,29 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\item;
+namespace pocketmine\tile;
 
-class Minecart extends Item{
-	public function __construct(){
-		parent::__construct(self::MINECART, 0, "Minecart");
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\StringTag;
+use pocketmine\Player;
+use pocketmine\utils\TextFormat;
+
+
+
+class MineCart extends Spawnable{
+	protected function readSaveData(CompoundTag $nbt) : void{
+
 	}
 
-	//TODO
+	protected function writeSaveData(CompoundTag $nbt) : void{
+
+	}
+
+
+	protected function addAdditionalSpawnData(CompoundTag $nbt) : void{
+
+	}
+
+	public function updateCompoundTag(CompoundTag $nbt, Player $player) : bool{
+	}
 }

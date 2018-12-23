@@ -119,7 +119,7 @@ class ItemFactory{
 		self::registerItem(new LiquidBucket(Item::BUCKET, 8, "Water Bucket", Block::FLOWING_WATER));
 		self::registerItem(new LiquidBucket(Item::BUCKET, 10, "Lava Bucket", Block::FLOWING_LAVA));
 
-		self::registerItem(new Minecart());
+		self::registerItem(new MineCart());
 		//TODO: SADDLE
 		self::registerItem(new ItemBlock(Block::IRON_DOOR_BLOCK, 0, Item::IRON_DOOR));
 		self::registerItem(new Redstone());

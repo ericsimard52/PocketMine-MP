@@ -213,6 +213,7 @@ class BlockFactory{
 		self::registerBlock((new Furnace())->setLit()); //flattening hack
 
 		self::registerBlock(new SignPost());
+    self::registerBlock(new MineCart());
 		self::registerBlock(new WoodenDoor(Block::OAK_DOOR_BLOCK, 0, "Oak Door", Item::OAK_DOOR));
 		self::registerBlock(new Ladder());
 		self::registerBlock(new Rail());
