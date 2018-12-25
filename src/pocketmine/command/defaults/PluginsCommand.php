@@ -41,15 +41,21 @@ class PluginsCommand extends VanillaCommand{
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args){
-		if(!$this->testPermission($sender)){
-			return true;
-		}
+    if (count($args) < 1){
+      if(!$this->testPermission($sender)){
+        return true;
+      }
 
-		$list = array_map(function(Plugin $plugin) : string{
-			return ($plugin->isEnabled() ? TextFormat::GREEN : TextFormat::RED) . $plugin->getDescription()->getFullName();
-		}, $sender->getServer()->getPluginManager()->getPlugins());
+      $list = array_map(function(Plugin $plugin) : string{
+          return ($plugin->isEnabled() ? TextFormat::GREEN : TextFormat::RED) . $plugin->getDescription()->getFullName();
+        }, $sender->getServer()->getPluginManager()->getPlugins());
 
-		$sender->sendMessage(new TranslationContainer("pocketmine.command.plugins.success", [count($list), implode(TextFormat::WHITE . ", ", $list)]));
-		return true;
-	}
+      $sender->sendMessage(new TranslationContainer("pocketmine.command.plugins.success", [count($list), implode(TextFormat::WHITE . ", ", $list)]));
+      return true;
+
+    }
+    if ($args[0] === "load"){
+      $sender->sendMessage("Hello");
+    }
+  }
 }

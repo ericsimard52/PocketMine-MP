@@ -1,0 +1,95 @@
+
+
+* Implementing MineCart on Rails
+  - Note taken on [2018-12-22 Sat 16:39] \\
+    I am confused, how come there is a minecart item for the inventory and on hand, but so much blcok and item entry were missing
+  - Note taken on [2018-12-22 Sat 16:38] \\
+    I am using id 328, which is for MINECART,
+    I need to implement a MINECART_ON_RAIL
+** New Files
+*** Item/MineCart.php
+    file://~/Git/PocketMine-MP/src/pocketmine/item/MineCart.php
+*** tile/MineCart.php
+    file://~/Git/PocketMine-MP/src/pocketmine/tile/MineCart.php
+*** block/MineCart.php
+    file://~/Git/PocketMine-MP/src/pocketmine/block/MineCart.php
+** Modified Files
+*** block/BlockFactory.php
+    file://~/Git/PocketMine-MP/src/pocketmine/block/BlockFactory.php
+    Addition:
+    sef:registerBlock(new MineCart());
+*** block/BlockIds/php
+    file://~/Git/PocketMine-MP/src/pocketmine/block/BlockIds.php
+    Addition:
+    public const MINECART=328
+*** tile/Tile.php
+    file://~/Git/PocketMine-MP/src/pocketmine/tile/Tile.php
+    Addition:
+    self::registerBlock(new MineCart()); # Line 216 at time of writing [2018-12-22 Sat]
+
+* Server.php
+** Variables
+| const  | public  | BROADCAST_CHANNEL_ADMINISTRATIVE | "pocketmine.broadcast.admin"                                  |
+| const  | public  | BROADCAST_CHANNEL_USERS          | "pocketmine.broadcast.user"                                   |
+| static | private | $instance                        | null                                                          |
+|        | private | $tickSleeper                     |                                                               |
+|        | private | $banByName                       | null                                                          |
+|        | private | $banByIP                         | null                                                          |
+|        | private | $operators                       | null                                                          |
+|        | private | $whitelist                       | null                                                          |
+|        | private | $isRunning                       | true                                                          |
+|        | private | $hasStopped                      | false                                                         |
+|        | private | $pluginManager                   | null                                                          |
+|        | private | $profilingTickRate               | 20                                                            |
+|        | private | $updater                         | null                                                          |
+|        | private | $asyncPool                       |                                                               |
+|        | private | $tickCounter                     | 0                                                             |
+|        | private | $nextTick                        | 0                                                             |
+|        | private | $tickAverage                     | [20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20] |
+|        | private | $useAverage                      | [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]                     |
+|        | private | $currentTPS                      | 20                                                            |
+|        | private | $currentUse                      | 0                                                             |
+|        | private | $doTitleTick                     | true                                                          |
+|        | private | $sendUsageTicker                 | 0                                                             |
+|        | private | $dispatchSignals                 | false                                                         |
+|        | private | $logger                          |                                                               |
+|        | private | $memoryManager                   |                                                               |
+|        | private | $console                         | null                                                          |
+|        | private | $commandMap                      | null                                                          |
+|        | private | $craftingManager                 |                                                               |
+|        | private | $resourceManager                 |                                                               |
+|        | private | $maxPlayers                      |                                                               |
+|        | private | $onlineMode                      | true                                                          |
+|        | private | $autoSave                        |                                                               |
+|        | private | $rcon                            |                                                               |
+|        | private | $entityMetadata                  |                                                               |
+|        | private | $playerMetadata                  |                                                               |
+|        | private | $levelMetadata                   |                                                               |
+|        | private | $network                         |                                                               |
+|        | private | $networkCompressionAsync         | true                                                          |
+|        | private | $autoTickRate                    | true                                                          |
+|        | private | $autoTickRateLimit               | 20                                                            |
+|        | private | $alwaysTickPlayers               | false                                                         |
+|        | private | $baseTickRate                    | 1                                                             |
+|        | private | $autoSaveTicker                  | 0                                                             |
+|        | private | $autoSaveTicks                   | 6000                                                          |
+|        | private | $language                        |                                                               |
+|        | private | $forceLanguage                   | false                                                         |
+|        | private | $serverID                        |                                                               |
+|        | private | $autoloader                      |                                                               |
+|        | private | $dataPath                        |                                                               |
+|        | private | $pluginPath                      |                                                               |
+|        | private | $uniquePlayers                   | []                                                            |
+|        | private | $queryHandler                    |                                                               |
+|        | private | $queryRegenerateTask             | null                                                          |
+|        | private | $properties                      |                                                               |
+|        | private | $propertyCache                   | []                                                            |
+|        | private | $config                          |                                                               |
+|        | private | $players                         | []                                                            |
+|        | private | $loggedInPlayers                 | []                                                            |
+|        | private | $playerList                      | []                                                            |
+|        | private | $levels                          | []                                                            |
+|        | private | $levelDefault                    | null                                                          |
+
+** Functions
+
