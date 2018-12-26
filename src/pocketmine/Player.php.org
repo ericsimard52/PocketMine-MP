@@ -1,0 +1,255 @@
+
+* Variables
+| const | public    | SURVIVAL             | 0                 |
+| const | public    | CREATIVE             | 1                 |
+| const | public    | ADVENTURE            | 2                 |
+| const | public    | SPECTATOR            | 3                 |
+| const | public    | VIEW                 | Player::SPECTATOR |
+|       | protected | $networkSession      |                   |
+|       | public    | $creationTime        | 0                 |
+|       | public    | $loggedIn            | false             |
+|       | public    | $spawned             | false             |
+|       | protected | $username            | ""                |
+|       | protected | $iusername           | ""                |
+|       | protected | $displayName         | ""                |
+|       | protected | $randomClientId      |                   |
+|       | protected | $xuid                | ""                |
+|       | protected | $authenticated       | false             |
+|       | protected | $windowCnt           | 2                 |
+|       | protected | $windows             | []                |
+|       | protected | $windowIndex         | []                |
+|       | protected | $permanentWindows    | []                |
+|       | protected | $cursorInventory     |                   |
+|       | protected | $craftingGrid        | null              |
+|       | protected | $messageCounter      | 2                 |
+|       | protected | $removeFormat        | true              |
+|       | protected | $achievements        | []                |
+|       | protected | $firstPlayed         |                   |
+|       | protected | $lastPlayed          |                   |
+|       | protected | $gamemode            |                   |
+|       | private   | $loaderId            | 0                 |
+|       | public    | $usedChunks          | []                |
+|       | protected | $loadQueue           | []                |
+|       | protected | $nextChunkOrderRun   | 5                 |
+|       | protected | $viewDistance        | -1                |
+|       | protected | $spawnThreshold      |                   |
+|       | protected | $spawnChunkLoadCount | 0                 |
+|       | protected | $chunksPerTick       |                   |
+|       | protected | $hiddenPlayers       | []                |
+|       | protected | $newPosition         |                   |
+|       | protected | $isTeleporting       | false             |
+|       | protected | $inAirTicks          | 0                 |
+|       | protected | $stepHeight          | 0.6               |
+|       | protected | $allowMovementCheats | false             |
+|       | protected | $sleeping            | null              |
+|       | private   | $spawnPosition       | null              |
+|       | protected | $autoJump            | true              |
+|       | protected | $allowFlight         | false             |
+|       | protected | $flying              | false             |
+|       | private   | $perm                | null              |
+|       | protected | $lineHeight          | null              |
+|       | protected | $locale              | "en_US"           |
+|       | protected | $startAction         | -1                |
+|       | protected | $usedItemsCooldown   | []                |
+|       | protected | $formIdCounter       | 0                 |
+|       | protected | $forms               | []                |
+
+* Functions
+| static | public    | isValidUserName           | (?string $name)                                                                                                          | bool                  |
+|        | public    | getLeaveMessage           | ()                                                                                                                       |                       |
+|        | public    | getClientId               | ()                                                                                                                       |                       |
+|        | public    | isBanned                  | ()                                                                                                                       | bool                  |
+|        | public    | setBanned                 | (bool $value)                                                                                                            |                       |
+|        | public    | isWhitelisted             | ()                                                                                                                       | bool                  |
+|        | public    | setWhitelisted            | (bool $value)                                                                                                            |                       |
+|        | public    | isAuthenticated           | ()                                                                                                                       | bool                  |
+|        | public    | getXuid                   | ()                                                                                                                       | string                |
+|        | public    | getUniqueId               | ()                                                                                                                       | ?UUID                 |
+|        | public    | getPlayer                 | ()                                                                                                                       |                       |
+|        | public    | getFirstPlayed            | ()                                                                                                                       |                       |
+|        | public    | getLastPlayed             | ()                                                                                                                       |                       |
+|        | public    | hasPlayedBefore           | ()                                                                                                                       | bool                  |
+|        | public    | setAllowFlight            | (bool $value)                                                                                                            |                       |
+|        | public    | getAllowFlight            | ()                                                                                                                       | bool                  |
+|        | public    | setFlying                 | (bool $value)                                                                                                            |                       |
+|        | public    | isFlying                  | ()                                                                                                                       | bool                  |
+|        | public    | setAutoJump               | (bool $value)                                                                                                            |                       |
+|        | public    | hasAutoJump               | ()                                                                                                                       | bool                  |
+|        | public    | allowMovementCheats       | ()                                                                                                                       | bool                  |
+|        | public    | setAllowMovementCheats    | (bool $value = true)                                                                                                     |                       |
+|        | public    | spawnTo                   | (Player $player)                                                                                                         | void                  |
+|        | public    | getServer                 | ()                                                                                                                       |                       |
+|        | public    | getRemoveFormat           | ()                                                                                                                       | bool                  |
+|        | public    | setRemoveFormat           | (bool $remove = true)                                                                                                    |                       |
+|        | public    | getScreenLineHeight       | ()                                                                                                                       | int                   |
+|        | public    | setScreenLineHeight       | (int $height = null)                                                                                                     |                       |
+|        | public    | canSee                    | (Player $player)                                                                                                         | bool                  |
+|        | public    | hidePlayer                | (Player $player)                                                                                                         |                       |
+|        | public    | showPlayer                | (Player $player)                                                                                                         |                       |
+|        | public    | canCollideWith            | (Entity $entity)                                                                                                         | bool                  |
+|        | public    | canBeCollidedWith         | ()                                                                                                                       | bool                  |
+|        | public    | resetFallDistance         | ()                                                                                                                       | void                  |
+|        | public    | getViewDistance           | ()                                                                                                                       | int                   |
+|        | public    | setViewDistance           | (int $distance)                                                                                                          |                       |
+|        | public    | isOnline                  | ()                                                                                                                       | bool                  |
+|        | public    | isOp                      | ()                                                                                                                       | bool                  |
+|        | public    | setOp                     | (bool $value)                                                                                                            |                       |
+|        | public    | isPermissionSet           | ($name)                                                                                                                  | bool                  |
+|        | public    | hasPermission             | ($name)                                                                                                                  | bool                  |
+|        | public    | addAttachment             | (Plugin $plugin, string $name = null, bool $value = null)                                                                | PermissionAttachment  |
+|        | public    | removeAttachment          | (PermissionAttachment $attachment)                                                                                       |                       |
+|        | public    | recalculatePermissions    | ()                                                                                                                       |                       |
+|        | public    | getEffectivePermissions   | ()                                                                                                                       | array                 |
+|        | public    | sendCommandData           | ()                                                                                                                       |                       |
+|        | public    | __construct               | (Server $server, NetworkSession $session)                                                                                |                       |
+|        | public    | isConnected               | ()                                                                                                                       | bool                  |
+|        | public    | getNetworkSession         | ()                                                                                                                       | NetworkSession        |
+|        | public    | getName                   | ()                                                                                                                       | string                |
+|        | public    | getLowerCaseName          | ()                                                                                                                       | string                |
+|        | public    | getDisplayName            | ()                                                                                                                       | string                |
+|        | public    | setDisplayName            | (string $name)                                                                                                           |                       |
+|        | public    | getLocale                 | ()                                                                                                                       | string                |
+|        | public    | changeSkin                | (Skin $skin, string $newSkinName, string $oldSkinName)                                                                   | bool                  |
+|        | public    | sendSkin                  | (?array $targets = null)                                                                                                 | void                  |
+|        | public    | getAddress                | ()                                                                                                                       | string                |
+|        | public    | getPort                   | ()                                                                                                                       | int                   |
+|        | public    | getPing                   | ()                                                                                                                       | int                   |
+|        | public    | getNextPosition           | ()                                                                                                                       | Position              |
+|        | public    | getInAirTicks             | ()                                                                                                                       | int                   |
+|        | public    | isUsingItem               | ()                                                                                                                       | bool                  |
+|        | public    | setUsingItem              | (bool $value)                                                                                                            |                       |
+|        | public    | getItemUseDuration        | ()                                                                                                                       | int                   |
+|        | public    | hasItemCooldown           | (Item $item)                                                                                                             | bool                  |
+|        | public    | resetItemCooldown         | (Item $item)                                                                                                             | void                  |
+|        | protected | checkItemCooldowns        | ()                                                                                                                       | void                  |
+|        | protected | switchLevel               | (Level $targetLevel)                                                                                                     | bool                  |
+|        | protected | unloadChunk               | (int $x, int $z, Level $level = null)                                                                                    |                       |
+|        | public    | sendChunk                 | (int $x, int $z, CompressBatchPromise $promise)                                                                          |                       |
+|        | protected | sendNextChunk             | ()                                                                                                                       |                       |
+|        | public    | doFirstSpawn              | ()                                                                                                                       |                       |
+|        | protected | orderChunks               | ()                                                                                                                       | void                  |
+|        | public    | doChunkRequests           | ()                                                                                                                       |                       |
+|        | public    | getSpawn                  | ()                                                                                                                       |                       |
+|        | public    | hasValidSpawnPosition     | ()                                                                                                                       | bool                  |
+|        | public    | setSpawn                  | (Vector3 $pos)                                                                                                           |                       |
+|        | public    | isSleeping                | ()                                                                                                                       | bool                  |
+|        | public    | sleepOn                   | (Vector3 $pos)                                                                                                           | bool                  |
+|        | public    | stopSleep                 | ()                                                                                                                       |                       |
+|        | public    | hasAchievement            | (string $achievementId)                                                                                                  | bool                  |
+|        | public    | awardAchievement          | (string $achievementId)                                                                                                  | bool                  |
+|        | public    | removeAchievement         | (string $achievementId)                                                                                                  |                       |
+|        | public    | getGamemode               | ()                                                                                                                       | int                   |
+| static | public    | getClientFriendlyGamemode | (int $gamemode)                                                                                                          | int                   |
+|        | public    | setGamemode               | (int $gm, bool $client = false)                                                                                          | bool                  |
+|        | public    | sendGamemode              | ()                                                                                                                       |                       |
+|        | public    | sendSettings              | ()                                                                                                                       |                       |
+|        | public    | isSurvival                | (bool $literal = false)                                                                                                  | bool                  |
+|        | public    | isCreative                | (bool $literal = false)                                                                                                  | bool                  |
+|        | public    | isAdventure               | (bool $literal = false)                                                                                                  | bool                  |
+|        | public    | isSpectator               | ()                                                                                                                       | bool                  |
+|        | public    | isFireProof               | ()                                                                                                                       | bool                  |
+|        | public    | getDrops                  | ()                                                                                                                       | array                 |
+|        | public    | getXpDropAmount           | ()                                                                                                                       | int                   |
+|        | protected | checkGroundState          | (float $movX, float $movY, float $movZ, float $dx, float $dy, float $dz)                                                 | void                  |
+|        | public    | canBeMovedByCurrents      | ()                                                                                                                       | bool                  |
+|        | protected | checkNearEntities         | ()                                                                                                                       |                       |
+|        | protected | processMovement           | (int $tickDiff)                                                                                                          |                       |
+|        | public    | jump                      | ()                                                                                                                       | void                  |
+|        | public    | setMotion                 | (Vector3 $motion)                                                                                                        | bool                  |
+|        | protected | updateMovement            | (bool $teleport = false)                                                                                                 | void                  |
+|        | protected | tryChangeMovement         | ()                                                                                                                       | void                  |
+|        | public    | sendAttributes            | (bool $sendAll = false)                                                                                                  |                       |
+|        | public    | onUpdate                  | (int $currentTick)                                                                                                       | bool                  |
+|        | protected | doFoodTick                | (int $tickDiff = 1)                                                                                                      | void                  |
+|        | public    | exhaust                   | (float $amount, int $cause = PlayerExhaustEvent::CAUSE_CUSTOM)                                                           | float                 |
+|        | public    | isHungry                  | ()                                                                                                                       | bool                  |
+|        | public    | canBreathe                | ()                                                                                                                       | bool                  |
+|        | protected | sendEffectAdd             | (EffectInstance $effect, bool $replacesOldEffect)                                                                        | void                  |
+|        | protected | sendEffectRemove          | (EffectInstance $effect)                                                                                                 | void                  |
+|        | public    | handleLogin               | (LoginPacket $packet)                                                                                                    | bool                  |
+|        | public    | setAuthenticationStatus   | (bool $authenticated, ?string $error)                                                                                    | bool                  |
+|        | public    | onLoginSuccess            | ()                                                                                                                       | void                  |
+|        | public    | _actuallyConstruct        | ()                                                                                                                       |                       |
+|        | protected | initHumanData             | (CompoundTag $nbt)                                                                                                       | void                  |
+|        | protected | initEntity                | (CompoundTag $nbt)                                                                                                       | void                  |
+|        | public    | chat                      | (string $message)                                                                                                        | bool                  |
+|        | public    | handleMovePlayer          | (MovePlayerPacket $packet)                                                                                               | bool                  |
+|        | public    | handleLevelSoundEvent     | (LevelSoundEventPacket $packet)                                                                                          | bool                  |
+|        | public    | handleEntityEvent         | (EntityEventPacket $packet)                                                                                              | bool                  |
+|        | public    | equipItem                 | (int $hotbarSlot)                                                                                                        | bool                  |
+|        | public    | useHeldItem               | ()                                                                                                                       | bool                  |
+|        | public    | consumeHeldItem           | ()                                                                                                                       | bool                  |
+|        | public    | releaseHeldItem           | ()                                                                                                                       | bool                  |
+|        | public    | pickBlock                 | (Vector3 $pos, bool $addTileNBT)                                                                                         | bool                  |
+|        | public    | startBreakBlock           | (Vector3 $pos, int $face)                                                                                                | bool                  |
+|        | public    | continueBreakBlock        | (Vector3 $pos, int $face)                                                                                                | void                  |
+|        | public    | stopBreakBlock            | (Vector3 $pos)                                                                                                           | void                  |
+|        | public    | breakBlock                | (Vector3 $pos)                                                                                                           | bool                  |
+|        | public    | interactBlock             | (Vector3 $pos, int $face, Vector3 $clickOffset)                                                                          | bool                  |
+|        | public    | attackEntity              | (Entity $entity)                                                                                                         | bool                  |
+|        | public    | interactEntity            | (Entity $entity, Vector3 $clickPos)                                                                                      | bool                  |
+|        | public    | toggleSprint              | (bool $sprint)                                                                                                           | void                  |
+|        | public    | toggleSneak               | (bool $sneak)                                                                                                            | void                  |
+|        | public    | toggleFlight              | (bool $fly)                                                                                                              | void                  |
+|        | public    | animate                   | (int $action)                                                                                                            | bool                  |
+|        | public    | dropItem                  | (Item $item)                                                                                                             | void                  |
+|        | public    | handleAdventureSettings   | (AdventureSettingsPacket $packet)                                                                                        | bool                  |
+|        | public    | handleBlockEntityData     | (BlockEntityDataPacket $packet)                                                                                          | bool                  |
+|        | public    | handleItemFrameDropItem   | (ItemFrameDropItemPacket $packet)                                                                                        | bool                  |
+|        | public    | handleBookEdit            | (BookEditPacket $packet)                                                                                                 | bool                  |
+|        | public    | sendDataPacket            | (DataPacket $packet, bool $immediate = false)                                                                            | bool                  |
+|        | public    | dataPacket                | (DataPacket $packet)                                                                                                     | bool                  |
+|        | public    | transfer                  | (string $address, int $port = 19132, string $message = "transfer")                                                       | bool                  |
+|        | public    | kick                      | (string $reason = "", bool $isAdmin = true, $quitMessage = null)                                                         | bool                  |
+|        | public    | addTitle                  | (string $title, string $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1)                              |                       |
+|        | public    | addSubTitle               | (string $subtitle)                                                                                                       |                       |
+|        | public    | addActionBarMessage       | (string $message)                                                                                                        |                       |
+|        | public    | removeTitles              | ()                                                                                                                       |                       |
+|        | public    | resetTitles               | ()                                                                                                                       |                       |
+|        | public    | setTitleDuration          | (int $fadeIn, int $stay, int $fadeOut)                                                                                   |                       |
+|        | protected | sendTitleText             | (string $title, int $type)                                                                                               |                       |
+|        | public    | sendMessage               | ($message)                                                                                                               |                       |
+|        | public    | sendTranslation           | (string $message, array $parameters = [])                                                                                |                       |
+|        | public    | sendPopup                 | (string $message, string $subtitle = "")                                                                                 |                       |
+|        | public    | sendTip                   | (string $message)                                                                                                        |                       |
+|        | public    | sendWhisper               | (string $sender, string $message)                                                                                        |                       |
+|        | public    | sendForm                  | (Form $form)                                                                                                             | void                  |
+|        | public    | onFormSubmit              | (int $formId, $responseData)                                                                                             | bool                  |
+| final  | public    | close                     | ($message = "", string $reason = "generic reason", bool $notify = true)                                                  | void                  |
+|        | public    | __debugInfo               | ()                                                                                                                       |                       |
+|        | public    | canSaveWithChunk          | ()                                                                                                                       | bool                  |
+|        | public    | setCanSaveWithChunk       | (bool $value)                                                                                                            | void                  |
+|        | public    | save                      | ()                                                                                                                       |                       |
+|        | public    | kill                      | ()                                                                                                                       | void                  |
+|        | protected | onDeath                   | ()                                                                                                                       | void                  |
+|        | protected | onDeathUpdate             | (int $tickDiff)                                                                                                          | bool                  |
+|        | public    | respawn                   | ()                                                                                                                       | void                  |
+|        | protected | applyPostDamageEffects    | (EntityDamageEvent $source)                                                                                              | void                  |
+|        | public    | attack                    | (EntityDamageEvent $source)                                                                                              | void                  |
+|        | public    | broadcastEntityEvent      | (int $eventId, ?int $eventData = null, ?array $players = null)                                                           | void                  |
+|        | public    | broadcastAnimation        | (?array $players, int $animationId)                                                                                      | void                  |
+|        | public    | getOffsetPosition         | (Vector3 $vector3)                                                                                                       | Vector3               |
+|        | public    | sendPosition              | (Vector3 $pos, float $yaw = null, float $pitch = null, int $mode = MovePlayerPacket::MODE_NORMAL, array $targets = null) |                       |
+|        | public    | teleport                  | (Vector3 $pos, float $yaw = null, float $pitch = null)                                                                   | bool                  |
+|        | protected | addDefaultWindows         | ()                                                                                                                       |                       |
+|        | public    | getCursorInventory        | ()                                                                                                                       | PlayerCursorInventory |
+|        | public    | getCraftingGrid           | ()                                                                                                                       | CraftingGrid          |
+|        | public    | setCraftingGrid           | (CraftingGrid $grid)                                                                                                     | void                  |
+|        | public    | doCloseInventory          | ()                                                                                                                       | void                  |
+|        | public    | doCloseWindow             | (int $windowId)                                                                                                          | bool                  |
+|        | public    | getWindowId               | (Inventory $inventory)                                                                                                   | int                   |
+|        | public    | getWindow                 | (int $windowId)                                                                                                          |                       |
+|        | public    | addWindow                 | (Inventory $inventory, int $forceId = null, bool $isPermanent = false)                                                   | int                   |
+|        | public    | removeWindow              | (Inventory $inventory, bool $force = false)                                                                              |                       |
+|        | public    | removeAllWindows          | (bool $removePermanentWindows = false)                                                                                   |                       |
+|        | public    | sendAllInventories        | ()                                                                                                                       |                       |
+|        | public    | setMetadata               | (string $metadataKey, MetadataValue $newMetadataValue)                                                                   |                       |
+|        | public    | getMetadata               | (string $metadataKey)                                                                                                    |                       |
+|        | public    | hasMetadata               | (string $metadataKey)                                                                                                    | bool                  |
+|        | public    | removeMetadata            | (string $metadataKey, Plugin $owningPlugin)                                                                              |                       |
+|        | public    | onChunkChanged            | (Chunk $chunk)                                                                                                           |                       |
+|        | public    | onChunkLoaded             | (Chunk $chunk)                                                                                                           |                       |
+|        | public    | onChunkPopulated          | (Chunk $chunk)                                                                                                           |                       |
+|        | public    | onChunkUnloaded           | (Chunk $chunk)                                                                                                           |                       |
+|        | public    | onBlockChanged            | (Vector3 $block)                                                                                                         |                       |
+|        | public    | getLoaderId               | ()                                                                                                                       | int                   |
