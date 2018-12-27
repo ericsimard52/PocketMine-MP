@@ -183,7 +183,7 @@ class PluginManager{
       $this->server->getLogger()->error("Given param is not a directory: ".$directory);
 			return [];
 		}
-
+    $this->server->getLogger()->error("Loading pugins from: ".$directory);
 		$plugins = [];
 		$loadedPlugins = [];
 		$dependencies = [];
@@ -199,6 +199,7 @@ class PluginManager{
 			$loaders = $this->fileAssociations;
 		}
 		foreach($loaders as $loader){
+      $this->server->getLogger()->info("In for loop with loader: ".$loader);
 			foreach(new \DirectoryIterator($directory) as $file){
 				if($file === "." or $file === ".."){
 					continue;
