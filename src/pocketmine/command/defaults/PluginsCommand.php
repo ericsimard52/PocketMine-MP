@@ -55,7 +55,7 @@ class PluginsCommand extends VanillaCommand{
 
     }
     if ($args[0] === "load"){
-      $sender->getServer()->getPluginManager()->loadPlugins("plugins/PureEntitiesX/src/revivalpmmp/pureentities");
+      $sender->getServer()->getPluginManager()->loadPlugins("plugins/PureEntitiesX/src/revivalpmmp/pureentities/");
     }
   }
 }
