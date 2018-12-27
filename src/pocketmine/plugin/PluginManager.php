@@ -199,13 +199,14 @@ class PluginManager{
 			$loaders = $this->fileAssociations;
 		}
 		foreach($loaders as $loader){
-      $this->server->getLogger()->info("In for loop with loader: ".$loader);
 			foreach(new \DirectoryIterator($directory) as $file){
 				if($file === "." or $file === ".."){
 					continue;
 				}
 				$file = $directory . $file;
+        $this->server->getLogger()->info("Checking if ".$file." can be loaded.");
 				if(!$loader->canLoadPlugin($file)){
+          $this->server->getLogger()->error($file." cannot be loaded.");
 					continue;
 				}
 				try{
