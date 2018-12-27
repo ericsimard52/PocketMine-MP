@@ -118,8 +118,6 @@ class PluginManager{
 	 * @return Plugin|null
 	 */
 	public function loadPlugin(string $path, array $loaders = null) : ?Plugin{
-        echo "HERE";
-
 		foreach($loaders ?? $this->fileAssociations as $loader){
 			if($loader->canLoadPlugin($path)){
 				$description = $loader->getPluginDescription($path);
@@ -181,6 +179,8 @@ class PluginManager{
 	 * @return Plugin[]
 	 */
 	public function loadPlugins(string $directory, array $newLoaders = null){
+        echo "HERE";
+
 		if(!is_dir($directory)){
 			return [];
 		}
